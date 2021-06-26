@@ -5,9 +5,9 @@
     <classes>
       <class name="com.iNetBanking.testCases.TC_LoginPageTest_001">
         <methods>
-          <include name="validateTitle"/>
           <include name="tearDown"/>
-          <include name="setUp"/>
+          <include name="browserInvoke"/>
+          <include name="loginTest"/>
         </methods>
       </class> <!-- com.iNetBanking.testCases.TC_LoginPageTest_001 -->
     </classes>

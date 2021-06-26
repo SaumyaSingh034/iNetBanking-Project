@@ -6,62 +6,53 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage  {
-	WebDriver driver;
-	
-	
-	
-	
-	public LoginPage(WebDriver driver2) {
-		// TODO Auto-generated constructor stub
-		driver = driver2;
-		PageFactory.initElements(driver2, this);
+public class LoginPage {
+
+	WebDriver ldriver;
+
+	public LoginPage(WebDriver rdriver) {
+		ldriver = rdriver;
+
+		PageFactory.initElements(rdriver, this);
 	}
 
-	@FindBy(name="uid")
+	@FindBy(name = "uid")
 	@CacheLookup
 	WebElement username;
-	
-	
-	@FindBy(xpath="//input[@type='password']")
+
+	@FindBy(xpath = "//input[@type='password']")
 	@CacheLookup
 	WebElement password;
-	
-	@FindBy(name="btnLogin")
+
+	@FindBy(name = "btnLogin")
 	@CacheLookup
 	WebElement loginBtn;
-	
-	@FindBy(name="btnReset")
+
+	@FindBy(name = "btnReset")
 	@CacheLookup
 	WebElement resetBtn;
-	
-	public String validateTitle()
-	{
-		return driver.getTitle();
+
+	public String validateTitle() {
+		return ldriver.getTitle();
 	}
-	
-	
-	public void sendUserName(String user)
-	{
+
+	public void sendUserName(String user) {
 		username.sendKeys(user);
 	}
-	
-	public void sendPassword(String pass)
-	{
+
+	public void sendPassword(String pass) {
 		password.sendKeys(pass);
 	}
-	
-	public void clickOnLoginBtn()
-	{
+
+	public void clickOnLoginBtn() {
 		loginBtn.click();
 	}
-	public void clickOnResetBtn()
-	{
+
+	public void clickOnResetBtn() {
 		resetBtn.click();
 	}
-	
-	public void doLoginMethod(String user, String pass)
-	{
+
+	public void doLoginMethod(String user, String pass) {
 		username.sendKeys(user);
 		password.sendKeys(pass);
 		loginBtn.click();

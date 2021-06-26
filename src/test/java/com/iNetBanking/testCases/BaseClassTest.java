@@ -4,27 +4,33 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
 
 import com.iNetBanking.utilities.BasicUtilityFiles;
 
 public class BaseClassTest {
 	
 	public static WebDriver driver;
-	Properties prop;
+	public static Properties prop;
 	String browserName = null;
-	String urlInvoke;
+	public static Logger logger;
+	//String urlInvoke = "https://demo.guru99.com/v4/index.php";
 	
 	
-	public BaseClassTest()
+	@BeforeClass
+	public void browserInvoke( )
 	{
 		prop = new Properties();
 		try {
@@ -35,41 +41,45 @@ public class BaseClassTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	public void browserInvoke( )
-	{
 		
-		urlInvoke = prop.getProperty("url");
 		browserName = prop.getProperty("browser");
-		System.out.println("********************URL--------> "+urlInvoke);
+		 logger = Logger.getLogger("INetBanking");
+		PropertyConfigurator.configure("log4j.properties");
+		
 		System.out.println("********************Browser Name--------> "+browserName);
 		if(browserName.equalsIgnoreCase("chrome"))
 		{
-			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\drivers\\chromedriver.exe");
-			driver = new ChromeDriver();
+			System.setProperty("webdriver.chrome.driver", prop.getProperty("chromepath"));
+			ChromeOptions capability = new ChromeOptions();
+			capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+			capability.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+			driver = new ChromeDriver(capability);
 			
 		} else if (browserName.equalsIgnoreCase("ie")) {
 
 			driver = new InternetExplorerDriver();
-			System.setProperty("webdriver.ie.driver", System.getProperty("user.dir")+ "\\drivers\\IEServer.exe");
+			System.setProperty("webdriver.ie.driver", prop.getProperty("iepath"));
 
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 
 			driver = new FirefoxDriver();
-			System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
+			System.setProperty("webdriver.gecko.driver",prop.getProperty("firefoxpath"));
 
 		} else if (browserName.equalsIgnoreCase("edge")) {
 
 			driver = new EdgeDriver();
-			System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "\\drivers\\edgedriver.exe");
+			System.setProperty("webdriver.edge.driver",prop.getProperty("edgePath"));
 
 		} else {
 			System.out.println("Please Check Your Browser. You have enter wrong browser......");
 		}
-		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(BasicUtilityFiles.PAGE_LOAD_TIME, TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(BasicUtilityFiles.IMPLICIT_WAIT, TimeUnit.SECONDS);
-		driver.get(urlInvoke);
+		
+	}
+	
+	@AfterClass
+	public void tearDown()
+	{
+		driver.quit();
 	}
 	
 	

@@ -8,6 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import com.iNetBanking.pageObjects.LoginPage;
+
 import com.iNetBanking.utilities.BasicUtilityFiles;
 
 public class TC_LoginPageTest_001 extends BaseClassTest{
@@ -38,6 +39,7 @@ public class TC_LoginPageTest_001 extends BaseClassTest{
 		String ACTUAL_TITLE_OF_PAGE = lp.validateTitle();
 		Assert.assertEquals(BasicUtilityFiles.TITLE_OF_DASHBOARD_PAGE, ACTUAL_TITLE_OF_PAGE);
 		logger.info("Validating the title of the page");
+		captureScreenshot(driver, "loginTest");
 		
 	}
 	

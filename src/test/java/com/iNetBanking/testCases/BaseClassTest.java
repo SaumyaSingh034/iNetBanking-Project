@@ -1,12 +1,16 @@
 package com.iNetBanking.testCases;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,7 +20,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-
+import org.testng.annotations.Parameters;
 
 import com.iNetBanking.utilities.BasicUtilityFiles;
 
@@ -24,13 +28,13 @@ public class BaseClassTest {
 	
 	public static WebDriver driver;
 	public static Properties prop;
-	String browserName = null;
+	
 	public static Logger logger;
 	//String urlInvoke = "https://demo.guru99.com/v4/index.php";
 	
-	
+	@Parameters("browser")
 	@BeforeClass
-	public void browserInvoke( )
+	public void browserInvoke(String browserName )
 	{
 		prop = new Properties();
 		try {
@@ -42,7 +46,7 @@ public class BaseClassTest {
 			e.printStackTrace();
 		}
 		
-		browserName = prop.getProperty("browser");
+		//browserName = prop.getProperty("browser");
 		 logger = Logger.getLogger("INetBanking");
 		PropertyConfigurator.configure("log4j.properties");
 		
@@ -80,6 +84,20 @@ public class BaseClassTest {
 	public void tearDown()
 	{
 		driver.quit();
+	}
+	
+	public void captureScreenshot(WebDriver driver, String tname)
+	{
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File target = new File(System.getProperty("user.dir") + "/Screenshots/" +tname+ ".png");
+		try {
+			FileUtils.copyFile(source, target);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Screenshot Taken");
+		
 	}
 	
 	

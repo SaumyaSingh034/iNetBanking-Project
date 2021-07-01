@@ -52,10 +52,16 @@ public class LoginPage {
 		resetBtn.click();
 	}
 
-	public void doLoginMethod(String user, String pass) {
+	public HomePage doLoginMethod(String user, String pass) throws InterruptedException {
+		
 		username.sendKeys(user);
+		Thread.sleep(4000);
 		password.sendKeys(pass);
+		Thread.sleep(4000);
 		loginBtn.click();
+		
+		Thread.sleep(4000);
+		return new HomePage(ldriver);
 	}
 
 }

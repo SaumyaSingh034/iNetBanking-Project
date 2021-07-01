@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -77,7 +79,27 @@ public class BaseClassTest {
 		} else {
 			System.out.println("Please Check Your Browser. You have enter wrong browser......");
 		}
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(BasicUtilityFiles.IMPLICIT_WAIT, TimeUnit.SECONDS);
+		//System.out.println("*********URL************* invoked********* "+prop.getProperty("urlInvoke"));
+
 		
+		driver.get(prop.getProperty("url"));
+		logger.info(" URL is launced***** --> "+prop.getProperty("url"));
+		
+	}
+	
+	public Boolean isAlertExits()
+	{
+		try
+		{
+		driver.switchTo().alert();
+		return true;
+		}
+		catch(NoAlertPresentException e)
+		{
+			return false;
+		}
 	}
 	
 	@AfterClass

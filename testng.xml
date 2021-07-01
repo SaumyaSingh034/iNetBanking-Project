@@ -9,6 +9,7 @@
 		<parameter name="browser" value="chrome"></parameter>
 		<classes>
 			<class name="com.iNetBanking.testCases.TC_LoginPageTest_001" />
+			<class name="com.iNetBanking.testCases.TC_LoginPage_DDT_002" />
 
 		</classes>
 	</test> <!-- Test -->

@@ -21,13 +21,7 @@ public class TC_LoginPageTest_001 extends BaseClassTest{
 	@Test
 	public void loginTest()
 	{
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(BasicUtilityFiles.IMPLICIT_WAIT, TimeUnit.SECONDS);
-		//System.out.println("*********URL************* invoked********* "+prop.getProperty("urlInvoke"));
-
 		
-		driver.get(prop.getProperty("url"));
-		logger.info(" URL is launced***** --> "+prop.getProperty("url"));
 		lp = new LoginPage(driver);
 		lp.sendUserName(prop.getProperty("username"));
 		logger.info("User name is entered");
